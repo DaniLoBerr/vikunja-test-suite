@@ -10,3 +10,7 @@
 
 # Personal Claude Code settings
 .claude/settings.local.json
+
+# App database and files
+/db
+/files

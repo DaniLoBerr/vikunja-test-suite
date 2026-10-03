@@ -1,0 +1,11 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:2.6.0
+    container_name: vikunja
+    ports:
+      - "8080:3456"
+    volumes:
+      - "./db:/db"
+      - "./files:/app/vikunja/files"
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: "http://localhost:8080"
