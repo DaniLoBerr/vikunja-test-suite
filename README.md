@@ -6,25 +6,41 @@ Automated test suite for [Vikunja](https://vikunja.io/), an open-source task man
 
 ## Local environment
 
-Vikunja runs in Docker from the official image, with SQLite. Docker with Compose is required.
+Vikunja runs in Docker from the official image, with SQLite. Docker with Compose and `curl` are required.
+
+To start it:
 
 ```sh
-mkdir -p db files
-chown 1000 db files
-docker compose up -d
+./up.sh
 ```
 
-Vikunja is then available at <http://localhost:8080>, and `docker ps -a` should show the `vikunja` container as `Up`.
+The script creates the data folders, starts the container, waits until the API answers and registers a test user. It exits with a non-zero code if any of those steps fails.
 
-The first two commands matter. Vikunja runs as user ID 1000 inside the container and must own the two mounted folders. If they are missing, Compose creates them as root and the container exits with a permission error. If your own user ID is not 1000, `chown` needs `sudo`.
-
-To stop it:
+Vikunja is then available at <http://localhost:8080>, and `docker ps -a` should show the `vikunja` container as `Up`:
 
 ```sh
-docker compose down
+docker ps -a
 ```
 
-This removes the container and keeps the data in `db/` and `files/`.
+The test user is `testuser`, with password `testpassword123`. It only exists in this local instance. To check that it works, log in through the API:
+
+```sh
+curl -si -X POST http://localhost:8080/api/v1/login \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "testuser", "password": "testpassword123"}'
+```
+
+The response is `200 OK` with a token in the body.
+
+To destroy it:
+
+```sh
+./down.sh
+```
+
+This removes the container and deletes the data in `db/` and `files/`, so the next `./up.sh` starts from an empty database.
+
+Vikunja runs as user ID 1000 inside the container and must own the two data folders, which is why `up.sh` runs `chown 1000` on them. If your own user ID is not 1000, that step needs `sudo`.
 
 ## AI usage
 
