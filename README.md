@@ -2,7 +2,7 @@
 
 Automated test suite for [Vikunja](https://vikunja.io/), an open-source task management app. Vikunja is treated the way a QA team treats an app it did not write: from the outside, without touching its code.
 
-**Status: work in progress.** Only the local environment exists for now; the tests come later.
+**Status: work in progress.** The local environment is in place and the first API tests are being written.
 
 ## Local environment
 
@@ -41,6 +41,26 @@ To destroy it:
 This removes the container and deletes the data in `db/` and `files/`, so the next `./up.sh` starts from an empty database.
 
 Vikunja runs as user ID 1000 inside the container and must own the two data folders, which is why `up.sh` runs `chown 1000` on them. If your own user ID is not 1000, that step needs `sudo`.
+
+## Running the tests
+
+The tests run against the local Vikunja started by `./up.sh`, so start it first. Python 3 is required.
+
+Create a virtual environment and install the pinned dependencies, once:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then run the suite from the repository root:
+
+```sh
+pytest
+```
+
+The virtual environment only applies to the terminal where it was activated: in a new terminal, run `. .venv/bin/activate` again before `pytest`.
 
 ## AI usage
 

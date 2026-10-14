@@ -14,3 +14,9 @@
 # App database and files
 /db
 /files
+
+# Virtual environments
+/.venv
+
+# Python bytecode cache
+__pycache__/
