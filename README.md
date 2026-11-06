@@ -2,7 +2,7 @@
 
 Automated test suite for [Vikunja](https://vikunja.io/), an open-source task management app. Vikunja is treated the way a QA team treats an app it did not write: from the outside, without touching its code.
 
-**Status: paused.** The local environment and the first API tests are in place. Development is not active.
+**Status: work in progress, developed in the author's spare time.** The local environment and the first API tests are in place.
 
 ## Local environment
 
